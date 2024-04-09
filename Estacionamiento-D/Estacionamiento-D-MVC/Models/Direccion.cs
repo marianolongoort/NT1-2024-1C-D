@@ -4,6 +4,9 @@
     {
         public int Id { get; set; }
 
+        public string Calle { get; set; }
+
+        public int Numero { get; set; }
 
 
     }
