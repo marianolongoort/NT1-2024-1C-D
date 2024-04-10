@@ -2,9 +2,22 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Estacionamiento_D_MVC.Models.Cliente">
     <Position X="8.5" Y="4" Width="1.5" />
-    <AssociationLine Name="ClientesVehiculos" Type="Estacionamiento_D_MVC.Models.ClienteVehiculo">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-1.404" Y="0.039" />
+    <InheritanceLine Type="Estacionamiento_D_MVC.Models.Persona" FixedToPoint="true">
+      <Path>
+        <Point X="10.75" Y="2.791" />
+        <Point X="10.75" Y="3.625" />
+        <Point X="9.75" Y="3.625" />
+        <Point X="9.75" Y="4" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="ClientesVehiculos" Type="Estacionamiento_D_MVC.Models.ClienteVehiculo" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.375" Y="4" />
+        <Point X="9.375" Y="2.657" />
+        <Point X="8.75" Y="2.657" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.556" Y="-0.916" Height="0.187" Width="1.547" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -12,8 +25,8 @@
       <FileName>Models\Cliente.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Telefonos" />
       <Property Name="ClientesVehiculos" />
+      <Property Name="Telefonos" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Estacionamiento_D_MVC.Models.Direccion">
@@ -34,9 +47,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Estacionamiento_D_MVC.Models.Persona">
-    <Position X="10" Y="1" Width="1.5" />
+    <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAACAAAAAEACAAgAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAACAAAAAkACAAgAAAAEAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Models\Persona.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -54,10 +67,10 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Estacionamiento_D_MVC.Models.Vehiculo">
-    <Position X="4.75" Y="1.25" Width="1.5" />
+    <Position X="4" Y="1.75" Width="1.5" />
     <AssociationLine Name="ClientesVehiculos" Type="Estacionamiento_D_MVC.Models.ClienteVehiculo">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.121" Y="0.264" />
+        <Position X="0.234" Y="-0.286" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -69,7 +82,14 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Estacionamiento_D_MVC.Models.ClienteVehiculo">
-    <Position X="7.5" Y="1.75" Width="1.5" />
+    <Position X="7.25" Y="2" Width="1.5" />
+    <AssociationLine Name="Cliente" Type="Estacionamiento_D_MVC.Models.Cliente" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.844" Y="3.313" />
+        <Point X="7.844" Y="4.312" />
+        <Point X="8.5" Y="4.312" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAQAAAABCAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Models\ClienteVehiculo.cs</FileName>
