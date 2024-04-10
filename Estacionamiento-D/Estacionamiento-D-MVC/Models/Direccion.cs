@@ -8,6 +8,11 @@
 
         public int Numero { get; set; }
 
+        //propiedad Relacional
+        public int PersonaId { get; set; }
+
+        //Propiedad Navegacional
+        public Persona Persona { get; set; }
 
     }
 }

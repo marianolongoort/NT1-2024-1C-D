@@ -4,5 +4,9 @@
     {
         public int Id { get; set; }
         public string Patente { get; set; }
+
+        //Prop Navegacional
+        public List<ClienteVehiculo> ClientesVehiculos { get; set; }
+
     }
 }
