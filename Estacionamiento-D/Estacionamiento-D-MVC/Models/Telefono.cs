@@ -3,6 +3,7 @@
     public class Telefono
     {
         public int Id { get; set; }
+        public int Caracteristica { get; set; }
         public int Numero { get; set; }
     }
 }
