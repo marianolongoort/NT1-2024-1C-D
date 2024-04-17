@@ -1,13 +1,15 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Estacionamiento_D_MVC.Models
 {
-    public class Persona
+    public class Persona : IdentityUser<int>
+
     {
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [StringLength(25, MinimumLength = 5, ErrorMessage = "El campo {0} debe tener como minimo {2} y como maximmo {1}")]
@@ -22,8 +24,12 @@ namespace Estacionamiento_D_MVC.Models
 
         [Required(ErrorMessage = "Este campo es requerido")]
         [EmailAddress(ErrorMessage = "El tipo {0} no es válido")]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "Correo")]
+        public override string Email
+        {
+            get { return base.Email; }
+            set { base.Email = value; }
+        }
 
         [DataType(DataType.Date)]
         public DateOnly Dia { get; set; }

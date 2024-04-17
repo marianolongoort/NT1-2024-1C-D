@@ -1,4 +1,6 @@
+using Estacionamiento_D_MVC.Data;
 using Estacionamiento_D_MVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Estacionamiento_D_MVC
 {
@@ -10,6 +12,12 @@ namespace Estacionamiento_D_MVC
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddDbContext<MiDb>(options => options.UseInMemoryDatabase("EstacionamientoDB"));
+
+            builder.Services.AddIdentity<Persona, Rol>().AddEntityFrameworkStores<MiDb>();
+
+
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
