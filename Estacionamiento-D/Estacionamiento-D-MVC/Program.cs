@@ -7,17 +7,15 @@ namespace Estacionamiento_D_MVC
         public static void Main(string[] args)
         {
 
-            Persona persona1 = new Persona() { Id=1,Nombre="Pedro",Apellido="Picapiedra"};
-
-            persona1.Direccion = new Direccion() { Id=1,Calle="Cordoba",Numero=2233};
-
-
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -33,6 +31,8 @@ namespace Estacionamiento_D_MVC
             app.UseRouting();
 
             app.UseAuthorization();
+
+          
 
             app.MapControllerRoute(
                 name: "default",

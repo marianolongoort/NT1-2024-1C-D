@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Estacionamiento_D_MVC.Models
 {
@@ -9,7 +10,7 @@ namespace Estacionamiento_D_MVC.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Este campo es requerido")]
-        [StringLength(25,MinimumLength = 5,ErrorMessage = "El campo {0} debe tener como minimo {2} y como maximmo {1}")]
+        [StringLength(25, MinimumLength = 5, ErrorMessage = "El campo {0} debe tener como minimo {2} y como maximmo {1}")]
         public string Nombre { get; set; }
 
 
@@ -20,8 +21,8 @@ namespace Estacionamiento_D_MVC.Models
 
 
         [Required(ErrorMessage = "Este campo es requerido")]
-        [EmailAddress(ErrorMessage ="El tipo {0} no es válido")]
-        [Display(Name ="Correo")]
+        [EmailAddress(ErrorMessage = "El tipo {0} no es válido")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [DataType(DataType.Date)]
@@ -37,6 +38,15 @@ namespace Estacionamiento_D_MVC.Models
 
         //Prop Navegacional
         public Direccion Direccion { get; set; }
+
+        //Propiedad computada o calculada
+        public string NombreCompleto
+        {
+            get
+            {
+                return $"{Apellido} - {Nombre}";
+            }            
+        }
 
     }
 }

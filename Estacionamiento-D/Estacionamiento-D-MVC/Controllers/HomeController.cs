@@ -6,27 +6,31 @@ namespace Estacionamiento_D_MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+       
+        public ActionResult Index()
         {
-            _logger = logger;
-        }
+            //inicio
 
-        public IActionResult Index()
-        {
+            //Toda la logica necesaria para obtener, procesar, etc.
+
+            //definir tipo de respuesta al cliente.
             return View();
         }
 
-        public IActionResult Privacy()
+        public ActionResult Privacy2()
         {
-            return View();
+            if (true)
+            {
+                return View();
+            }
+
+            return View("test");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public int Sumar(int numero1, int numero2)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return numero1 + numero2;
         }
+
     }
 }
