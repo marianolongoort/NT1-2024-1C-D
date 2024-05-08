@@ -13,9 +13,11 @@ namespace Estacionamiento_D_MVC
 
             // Add services to the container.
 
-            builder.Services.AddDbContext<MiDb>(options => options.UseInMemoryDatabase("EstacionamientoDB"));
+            builder.Services.AddDbContext<MiBaseDeDatos>(options => 
+                                                            options.UseInMemoryDatabase("EstacionamientoDB")
+                                                        );
 
-            builder.Services.AddIdentity<Persona, Rol>().AddEntityFrameworkStores<MiDb>();
+            builder.Services.AddIdentity<Persona, Rol>().AddEntityFrameworkStores<MiBaseDeDatos>();
 
 
             builder.Services.AddControllersWithViews();

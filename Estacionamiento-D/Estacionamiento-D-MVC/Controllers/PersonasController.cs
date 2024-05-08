@@ -12,9 +12,9 @@ namespace Estacionamiento_D_MVC.Controllers
 {
     public class PersonasController : Controller
     {
-        private readonly MiDb _context;
+        private readonly MiBaseDeDatos _context;
 
-        public PersonasController(MiDb context)
+        public PersonasController(MiBaseDeDatos context)
         {
             _context = context;
         }

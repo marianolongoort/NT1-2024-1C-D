@@ -10,23 +10,22 @@ using Estacionamiento_D_MVC.Models;
 
 namespace Estacionamiento_D_MVC.Controllers
 {
-    public class DireccionesController : Controller
+    public class VehiculosController : Controller
     {
-        private readonly MiBaseDeDatos _context;
+        private readonly MiBaseDeDatos _miBaseDeDatos;
 
-        public DireccionesController(MiBaseDeDatos context)
+        public VehiculosController(MiBaseDeDatos context)
         {
-            _context = context;
+            _miBaseDeDatos = context;
         }
 
-        // GET: Direcciones
+        // GET: Vehiculos
         public async Task<IActionResult> Index()
         {
-            var miDb = _context.Direcciones.Include(d => d.Persona);
-            return View(await miDb.ToListAsync());
+            return View(await _miBaseDeDatos.Vehiculos.ToListAsync());
         }
 
-        // GET: Direcciones/Details/5
+        // GET: Vehiculos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,42 @@ namespace Estacionamiento_D_MVC.Controllers
                 return NotFound();
             }
 
-            var direccion = await _context.Direcciones
-                .Include(d => d.Persona)
+            var vehiculo = await _miBaseDeDatos.Vehiculos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (direccion == null)
+            if (vehiculo == null)
             {
                 return NotFound();
             }
 
-            return View(direccion);
+            return View(vehiculo);
         }
 
-        // GET: Direcciones/Create
+        // GET: Vehiculos/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator");
-            return View();
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.Patente = "III222";
+
+            return View(vehiculo);
         }
 
-        // POST: Direcciones/Create
+        // POST: Vehiculos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Calle,Numero,PersonaId")] Direccion direccion)
+        public async Task<IActionResult> Create([Bind("Id,Patente")] Vehiculo vehiculo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(direccion);
-                await _context.SaveChangesAsync();
+                _miBaseDeDatos.Add(vehiculo);
+                await _miBaseDeDatos.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
-            return View(direccion);
+            return View(vehiculo);
         }
 
-        // GET: Direcciones/Edit/5
+        // GET: Vehiculos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +76,22 @@ namespace Estacionamiento_D_MVC.Controllers
                 return NotFound();
             }
 
-            var direccion = await _context.Direcciones.FindAsync(id);
-            if (direccion == null)
+            var vehiculo = await _miBaseDeDatos.Vehiculos.FindAsync(id);
+            if (vehiculo == null)
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
-            return View(direccion);
+            return View(vehiculo);
         }
 
-        // POST: Direcciones/Edit/5
+        // POST: Vehiculos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Calle,Numero,PersonaId")] Direccion direccion)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Patente")] Vehiculo vehiculo)
         {
-            if (id != direccion.Id)
+            if (id != vehiculo.Id)
             {
                 return NotFound();
             }
@@ -102,12 +100,12 @@ namespace Estacionamiento_D_MVC.Controllers
             {
                 try
                 {
-                    _context.Update(direccion);
-                    await _context.SaveChangesAsync();
+                    _miBaseDeDatos.Update(vehiculo);
+                    await _miBaseDeDatos.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DireccionExists(direccion.Id))
+                    if (!VehiculoExists(vehiculo.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +116,10 @@ namespace Estacionamiento_D_MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
-            return View(direccion);
+            return View(vehiculo);
         }
 
-        // GET: Direcciones/Delete/5
+        // GET: Vehiculos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,35 +127,34 @@ namespace Estacionamiento_D_MVC.Controllers
                 return NotFound();
             }
 
-            var direccion = await _context.Direcciones
-                .Include(d => d.Persona)
+            var vehiculo = await _miBaseDeDatos.Vehiculos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (direccion == null)
+            if (vehiculo == null)
             {
                 return NotFound();
             }
 
-            return View(direccion);
+            return View(vehiculo);
         }
 
-        // POST: Direcciones/Delete/5
+        // POST: Vehiculos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var direccion = await _context.Direcciones.FindAsync(id);
-            if (direccion != null)
+            var vehiculo = await _miBaseDeDatos.Vehiculos.FindAsync(id);
+            if (vehiculo != null)
             {
-                _context.Direcciones.Remove(direccion);
+                _miBaseDeDatos.Vehiculos.Remove(vehiculo);
             }
 
-            await _context.SaveChangesAsync();
+            await _miBaseDeDatos.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DireccionExists(int id)
+        private bool VehiculoExists(int id)
         {
-            return _context.Direcciones.Any(e => e.Id == id);
+            return _miBaseDeDatos.Vehiculos.Any(e => e.Id == id);
         }
     }
 }

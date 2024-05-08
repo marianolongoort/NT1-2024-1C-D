@@ -9,7 +9,7 @@ namespace Estacionamiento_D_MVC.Models
 
 
         //Prop Navegacional
-        //public List<ClienteVehiculo> ClientesVehiculos { get; set; }
+        public List<ClienteVehiculo> ClientesVehiculos { get; set; }
 
 
 

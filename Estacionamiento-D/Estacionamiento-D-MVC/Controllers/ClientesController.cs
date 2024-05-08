@@ -10,23 +10,22 @@ using Estacionamiento_D_MVC.Models;
 
 namespace Estacionamiento_D_MVC.Controllers
 {
-    public class DireccionesController : Controller
+    public class ClientesController : Controller
     {
         private readonly MiBaseDeDatos _context;
 
-        public DireccionesController(MiBaseDeDatos context)
+        public ClientesController(MiBaseDeDatos context)
         {
             _context = context;
         }
 
-        // GET: Direcciones
+        // GET: Clientes
         public async Task<IActionResult> Index()
         {
-            var miDb = _context.Direcciones.Include(d => d.Persona);
-            return View(await miDb.ToListAsync());
+            return View(await _context.Clientes.ToListAsync());
         }
 
-        // GET: Direcciones/Details/5
+        // GET: Clientes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,49 @@ namespace Estacionamiento_D_MVC.Controllers
                 return NotFound();
             }
 
-            var direccion = await _context.Direcciones
-                .Include(d => d.Persona)
+            var cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (direccion == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(direccion);
+            return View(cliente);
         }
 
-        // GET: Direcciones/Create
+        // GET: Clientes/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator");
-            return View();
+            Cliente cliente = new Cliente()
+            {
+                Cuil = 20223334440,
+                Nombre = "Pedro",
+                Apellido = "Picapiedra",
+                Email = "pedro@ort.edu.ar",
+                AccessFailedCount = 0
+            };
+            cliente.Dia = DateOnly.FromDateTime(DateTime.Today);
+
+            return View(cliente);
         }
 
-        // POST: Direcciones/Create
+        // POST: Clientes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Calle,Numero,PersonaId")] Direccion direccion)
+        public async Task<IActionResult> Create([Bind("Cuil,Nombre,Apellido,Email,Dia,Hora,Password,Id,UserName,NormalizedUserName,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(direccion);
+                _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
-            return View(direccion);
+            return View(cliente);
         }
 
-        // GET: Direcciones/Edit/5
+        // GET: Clientes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +83,22 @@ namespace Estacionamiento_D_MVC.Controllers
                 return NotFound();
             }
 
-            var direccion = await _context.Direcciones.FindAsync(id);
-            if (direccion == null)
+            var cliente = await _context.Clientes.FindAsync(id);
+            if (cliente == null)
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
-            return View(direccion);
+            return View(cliente);
         }
 
-        // POST: Direcciones/Edit/5
+        // POST: Clientes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Calle,Numero,PersonaId")] Direccion direccion)
+        public async Task<IActionResult> Edit(int id, [Bind("Cuil,Nombre,Apellido,Email,Dia,Hora,Password,Id,UserName,NormalizedUserName,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] Cliente cliente)
         {
-            if (id != direccion.Id)
+            if (id != cliente.Id)
             {
                 return NotFound();
             }
@@ -102,12 +107,12 @@ namespace Estacionamiento_D_MVC.Controllers
             {
                 try
                 {
-                    _context.Update(direccion);
+                    _context.Update(cliente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DireccionExists(direccion.Id))
+                    if (!ClienteExists(cliente.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +123,10 @@ namespace Estacionamiento_D_MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
-            return View(direccion);
+            return View(cliente);
         }
 
-        // GET: Direcciones/Delete/5
+        // GET: Clientes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,35 +134,34 @@ namespace Estacionamiento_D_MVC.Controllers
                 return NotFound();
             }
 
-            var direccion = await _context.Direcciones
-                .Include(d => d.Persona)
+            var cliente = await _context.Clientes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (direccion == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return View(direccion);
+            return View(cliente);
         }
 
-        // POST: Direcciones/Delete/5
+        // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var direccion = await _context.Direcciones.FindAsync(id);
-            if (direccion != null)
+            var cliente = await _context.Clientes.FindAsync(id);
+            if (cliente != null)
             {
-                _context.Direcciones.Remove(direccion);
+                _context.Clientes.Remove(cliente);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DireccionExists(int id)
+        private bool ClienteExists(int id)
         {
-            return _context.Direcciones.Any(e => e.Id == id);
+            return _context.Clientes.Any(e => e.Id == id);
         }
     }
 }
