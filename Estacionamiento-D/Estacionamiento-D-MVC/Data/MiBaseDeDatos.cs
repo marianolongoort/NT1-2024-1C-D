@@ -30,7 +30,7 @@ namespace Estacionamiento_D_MVC.Data
                                                     .WithMany(v => v.ClientesVehiculos)
                                                     .HasForeignKey(cv=>cv.VehiculoId);
 
-
+            modelBuilder.Entity<IdentityUser<int>>().ToTable("Personas");
 
             //modelBuilder.Entity<Direccion>().HasKey(d => d.Id);
 

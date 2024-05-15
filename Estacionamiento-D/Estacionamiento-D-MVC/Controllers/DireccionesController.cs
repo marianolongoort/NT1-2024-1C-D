@@ -48,7 +48,7 @@ namespace Estacionamiento_D_MVC.Controllers
         // GET: Direcciones/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator");
+            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace Estacionamiento_D_MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Calle,Numero,PersonaId")] Direccion direccion)
+        public async Task<IActionResult> Create([Bind("Id,Calle,Numero,CodPostal,PersonaId")] Direccion direccion)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace Estacionamiento_D_MVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
+            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto", direccion.PersonaId);
             return View(direccion);
         }
 
@@ -82,7 +82,7 @@ namespace Estacionamiento_D_MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
+            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto", direccion.PersonaId);
             return View(direccion);
         }
 
@@ -91,7 +91,7 @@ namespace Estacionamiento_D_MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Calle,Numero,PersonaId")] Direccion direccion)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Calle,Numero,CodPostal,PersonaId")] Direccion direccion)
         {
             if (id != direccion.Id)
             {
@@ -118,7 +118,7 @@ namespace Estacionamiento_D_MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", direccion.PersonaId);
+            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto", direccion.PersonaId);
             return View(direccion);
         }
 
