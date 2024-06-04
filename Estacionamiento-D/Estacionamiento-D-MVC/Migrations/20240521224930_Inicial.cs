@@ -53,7 +53,7 @@ namespace Estacionamiento_D_MVC.Migrations
                     Hora = table.Column<TimeOnly>(type: "time", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cuil = table.Column<long>(type: "bigint", nullable: true),
-                    Legajo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Legajo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,7 +66,7 @@ namespace Estacionamiento_D_MVC.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Patente = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Patente = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -187,6 +187,7 @@ namespace Estacionamiento_D_MVC.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Calle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Numero = table.Column<int>(type: "int", nullable: false),
+                    CodPostal = table.Column<int>(type: "int", nullable: false),
                     PersonaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

@@ -6,6 +6,7 @@ namespace Estacionamiento_D_MVC.Models
     public class Direccion
     {
         public int Id { get; set; }
+        [Required(ErrorMessage ="La {0} es requeridiiiiisima")]
         [StringLength(100,MinimumLength = 5)]
         public string Calle { get; set; }
 

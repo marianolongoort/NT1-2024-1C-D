@@ -22,21 +22,47 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Clientes" asp-action="Index" >Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Personas" asp-action="Index">Personas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Vehiculos" asp-action="Index">Vehiculos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Direcciones" asp-action="Index">Direcciones</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="ClientesVehiculos" asp-action="Index">ClientesVehiculos</a>
-                        </li>
+
+                        @if(User.Identity.IsAuthenticated){
+                            //el usuario está autenticado
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Personas" asp-action="Index">Personas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Vehiculos" asp-action="Index">Vehiculos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Direcciones" asp-action="Index">Direcciones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="ClientesVehiculos" asp-action="Index">ClientesVehiculos</a>
+                            </li>
+                            <li class ="nav-item">
+                                <span class="badge bg-info mt-2">@User.Identity.Name</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="CerrarSesion">Cerrar Sesión</a>
+                            </li>
+                        }
+                        else
+                        {
+                            //no, es anonimo
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Registrar">Registrate</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="IniciarSesion">Iniciar Sesión</a>
+                            </li>
+                        }
+
+                        
+                        
+                        
+                        
                     </ul>
                 </div>
             </div>

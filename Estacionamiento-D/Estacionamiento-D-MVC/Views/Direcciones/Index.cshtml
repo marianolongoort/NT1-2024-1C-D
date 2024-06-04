@@ -7,7 +7,8 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-todas="true" asp-route-otra="cosa" class="btn badge bg-danger">Crear C/Todas</a>
+    <a asp-action="Create" asp-route-todas="false" class="btn badge bg-success">Crear S/Direccion</a>
 </p>
 <table class="table">
     <thead>

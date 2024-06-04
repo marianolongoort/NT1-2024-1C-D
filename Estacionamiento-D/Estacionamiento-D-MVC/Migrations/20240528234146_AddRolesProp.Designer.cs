@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Estacionamiento_D_MVC.Migrations
 {
     [DbContext(typeof(MiBaseDeDatos))]
-    [Migration("20240514231159_Inicial")]
-    partial class Inicial
+    [Migration("20240528234146_AddRolesProp")]
+    partial class AddRolesProp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,8 +49,12 @@ namespace Estacionamiento_D_MVC.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Calle")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("CodPostal")
+                        .HasColumnType("int");
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
@@ -99,7 +103,9 @@ namespace Estacionamiento_D_MVC.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Patente")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.HasKey("Id");
 
@@ -118,6 +124,11 @@ namespace Estacionamiento_D_MVC.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -134,6 +145,10 @@ namespace Estacionamiento_D_MVC.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole<int>");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -316,6 +331,13 @@ namespace Estacionamiento_D_MVC.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Estacionamiento_D_MVC.Models.Rol", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole<int>");
+
+                    b.HasDiscriminator().HasValue("Rol");
+                });
+
             modelBuilder.Entity("Estacionamiento_D_MVC.Models.Persona", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser<int>");
@@ -357,7 +379,9 @@ namespace Estacionamiento_D_MVC.Migrations
                     b.HasBaseType("Estacionamiento_D_MVC.Models.Persona");
 
                     b.Property<string>("Legajo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasDiscriminator().HasValue("Empleado");
                 });

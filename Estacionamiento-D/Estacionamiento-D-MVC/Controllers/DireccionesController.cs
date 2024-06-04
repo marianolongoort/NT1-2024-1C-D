@@ -45,16 +45,33 @@ namespace Estacionamiento_D_MVC.Controllers
             return View(direccion);
         }
 
-        // GET: Direcciones/Create
-        public IActionResult Create()
+
+        public IActionResult Create(bool todas = false)
         {
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "NombreCompleto");
+            var personas = _context.Personas;
+            var personasIncludeDireccion = _context.Personas.Include(p => p.Direccion);
+
+            IQueryable origenDePersonas;
+
+            if (todas)
+            {
+                //quiero todas las personas
+                origenDePersonas = personasIncludeDireccion;
+            }
+            else
+            {
+                //solo las que no tengan dirección
+                origenDePersonas = personasIncludeDireccion.Where(p=>p.Direccion == null);
+            }
+
+
+
+            ViewData["PersonaId"] = new SelectList(origenDePersonas, "Id", "NombreCompleto");
+
             return View();
         }
 
-        // POST: Direcciones/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Calle,Numero,CodPostal,PersonaId")] Direccion direccion)

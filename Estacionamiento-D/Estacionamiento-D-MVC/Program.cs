@@ -1,5 +1,7 @@
 using Estacionamiento_D_MVC.Data;
 using Estacionamiento_D_MVC.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Estacionamiento_D_MVC
@@ -18,6 +20,23 @@ namespace Estacionamiento_D_MVC
 
             builder.Services.AddIdentity<Persona, Rol>().AddEntityFrameworkStores<MiBaseDeDatos>();
 
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5; //por defecto 6
+                options.User.RequireUniqueEmail = true;
+            });
+
+            builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+                opciones =>
+                {
+                    opciones.LoginPath = "/Account/TBD";
+                    opciones.AccessDeniedPath = "/TBD";
+                    opciones.Cookie.Name = "GarageApp";
+                });
 
             builder.Services.AddControllersWithViews();
 
@@ -39,6 +58,7 @@ namespace Estacionamiento_D_MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
           

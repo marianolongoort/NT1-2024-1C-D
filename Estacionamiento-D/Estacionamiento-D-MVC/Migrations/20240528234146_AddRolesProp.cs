@@ -5,25 +5,26 @@
 namespace Estacionamiento_D_MVC.Migrations
 {
     /// <inheritdoc />
-    public partial class AddDireccionCodPostal : Migration
+    public partial class AddRolesProp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "CodPostal",
-                table: "Direcciones",
-                type: "int",
+            migrationBuilder.AddColumn<string>(
+                name: "Discriminator",
+                table: "AspNetRoles",
+                type: "nvarchar(21)",
+                maxLength: 21,
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "CodPostal",
-                table: "Direcciones");
+                name: "Discriminator",
+                table: "AspNetRoles");
         }
     }
 }

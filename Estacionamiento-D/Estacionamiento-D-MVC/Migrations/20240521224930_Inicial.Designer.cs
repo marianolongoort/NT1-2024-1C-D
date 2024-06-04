@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Estacionamiento_D_MVC.Migrations
 {
     [DbContext(typeof(MiBaseDeDatos))]
-    [Migration("20240514234324_Add.Direccion.CodPostal")]
-    partial class AddDireccionCodPostal
+    [Migration("20240521224930_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,7 +102,9 @@ namespace Estacionamiento_D_MVC.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Patente")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.HasKey("Id");
 
@@ -360,7 +362,9 @@ namespace Estacionamiento_D_MVC.Migrations
                     b.HasBaseType("Estacionamiento_D_MVC.Models.Persona");
 
                     b.Property<string>("Legajo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasDiscriminator().HasValue("Empleado");
                 });

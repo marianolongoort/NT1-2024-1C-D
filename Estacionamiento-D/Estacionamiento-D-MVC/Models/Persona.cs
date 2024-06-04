@@ -39,8 +39,8 @@ namespace Estacionamiento_D_MVC.Models
         public TimeOnly Hora { get; set; }
 
 
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        //[DataType(DataType.Password)]
+        //public string Password { get; set; }
 
         //Prop Navegacional
         public Direccion Direccion { get; set; }

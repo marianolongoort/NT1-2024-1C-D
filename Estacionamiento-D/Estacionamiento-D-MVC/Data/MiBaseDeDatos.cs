@@ -34,9 +34,10 @@ namespace Estacionamiento_D_MVC.Data
 
             //modelBuilder.Entity<Direccion>().HasKey(d => d.Id);
 
-
-
+            
         }
+
+
 
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
@@ -46,6 +47,8 @@ namespace Estacionamiento_D_MVC.Data
 
         public DbSet<ClienteVehiculo> ClientesVehiculos { get; set; }
         public DbSet<Vehiculo> Vehiculos { get; set; }
+
+        public DbSet<Rol> MisRoles { get; set; }
 
 
         //todas las demas propiedades, de los modelos que quiero persistir.
