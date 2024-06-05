@@ -33,8 +33,8 @@ namespace Estacionamiento_D_MVC
             builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
                 opciones =>
                 {
-                    opciones.LoginPath = "/Account/TBD";
-                    opciones.AccessDeniedPath = "/TBD";
+                    opciones.LoginPath = "/Account/IniciarSesion";
+                    opciones.AccessDeniedPath = "/Account/AccesoDenegado";
                     opciones.Cookie.Name = "GarageApp";
                 });
 

@@ -1,0 +1,6 @@
+﻿@if(@ViewBag.URLAcceso is not null)
+{
+    <h1>Ud. no tiene permisos para acceder a @ViewBag.URLAcceso</h1>
+}
+
+<a asp-action="CerrarSesion">Cerrar Sesión</a>

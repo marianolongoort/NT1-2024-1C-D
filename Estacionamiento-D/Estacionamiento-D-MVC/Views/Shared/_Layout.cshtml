@@ -78,7 +78,9 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Estacionamiento_D_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - Estacionamiento_D_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> 
+            <a asp-controller="Precarga" asp-action="Seed" class="btn badge bg-success">Pre-Carga DB</a>
+            <a asp-controller="Precarga" asp-action="RecreateDb" class="btn badge bg-danger">Regenerar DB</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

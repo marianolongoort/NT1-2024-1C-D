@@ -1,10 +1,12 @@
 ﻿using Estacionamiento_D_MVC.Data;
 using Estacionamiento_D_MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estacionamiento_D_MVC.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly MiBaseDeDatos _midb;
@@ -28,12 +30,14 @@ namespace Estacionamiento_D_MVC.Controllers
         #region Registrar
 
         //Ofrecer el formulario de registración
+        [AllowAnonymous]
         public IActionResult Registrar()
         {
             return View();
         }
 
         //Procesar info del cliente para registralo
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Registrar(RegistrarVM clienteFormulario)
         {
@@ -67,16 +71,23 @@ namespace Estacionamiento_D_MVC.Controllers
         #endregion
 
         #region Inicio y Cierre de sesión
-        public IActionResult IniciarSesion()
+        [AllowAnonymous]
+        public IActionResult IniciarSesion(string returnurl)
         {
             bool estaAutenticado = User.Identity.IsAuthenticated;
             if (estaAutenticado) {
                 return RedirectToAction("Index","Clientes");
             }
+
+            
+            TempData["ReturnUrl"] = returnurl;
+
+
             return View();
         }
 
         //Procesar info del cliente para registralo
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> IniciarSesion(LoginVM loginVM)
         {
@@ -88,6 +99,12 @@ namespace Estacionamiento_D_MVC.Controllers
 
                 if (resultSignIn.Succeeded)
                 {
+                    var returnurl = TempData["ReturnUrl"] as string;
+                    if(returnurl is not null)
+                    {
+                        return Redirect(returnurl);
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 //tratart el error
@@ -100,6 +117,7 @@ namespace Estacionamiento_D_MVC.Controllers
             return View(loginVM);
         }
 
+
         public async Task<IActionResult> CerrarSesion()
         {
             await _signInManager.SignOutAsync();
@@ -108,5 +126,12 @@ namespace Estacionamiento_D_MVC.Controllers
         }
 
         #endregion
+
+
+        public async Task<IActionResult> AccesoDenegado(string returnurl)
+        {
+            ViewBag.URLAcceso = returnurl;
+            return View();
+        }
     }
 }

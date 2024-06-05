@@ -23,6 +23,11 @@ namespace Estacionamiento_D_MVC.Controllers
         public async Task<IActionResult> Index()
         {
             var miBaseDeDatos = _miBaseDeDatos.ClientesVehiculos.Include(c => c.Cliente).Include(c => c.Vehiculo);
+
+            if (false)
+            {
+                return View("VistaFalsa");
+            }
             return View(await miBaseDeDatos.ToListAsync());
         }
 
